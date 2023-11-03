@@ -1,0 +1,2 @@
+2023-11-03 15:53:43	No se pudo encontrar '/public_html/trigono-staging'
+2023-11-03 15:54:41	No se pudo encontrar '/public_html/trigono-staging'
