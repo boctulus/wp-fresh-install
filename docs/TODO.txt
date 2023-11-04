@@ -1,0 +1,14 @@
+TODO WP-FRESH-INSTALL
+=====================
+
+- Obtener la lista de plugins y themes automaticamente.
+
+- Buscar de forma automatica los plugins y themes en la tienda de WP.
+
+- Hacer un plugin que descomprima esta herramienta a nivel de WP_ROOT
+
+y reemplace el index.php por uno que indique el site esta "en mantenimiento"
+
+y en segundo plano ejecute la herramienta "wp-fresh-install"
+
+ 
