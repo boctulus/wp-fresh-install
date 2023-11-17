@@ -45,10 +45,8 @@ require_once __DIR__ . '/core/helpers/system.php';
 
 $root_files = Files::glob(__DIR__ . '/..', '*');
 
-$root_dir = '/';
-if (count($root_files) > 0 && Strings::contains('/public_html/', $root_files[0])) {
-	$root_dir = Strings::before($root_files[0], '/public_html/') . '/public_html';
-}
+$root_dir = realpath(__DIR__ . '/../'); //
+
 
 // dd($root_dir, 'ROOT DIR');
 // exit;
@@ -58,20 +56,9 @@ if (count($root_files) > 0 && Strings::contains('/public_html/', $root_files[0])
 */
 
 $to_wipe  = [
-	'trigono-staging',
-	'wp-admin',
-	'wp-includes',
-	'wp-content/ai1wm-backups',
-	'wp-content/cache',
-	'wp-content/languages',
-	'wp-content/mu-plugins',
-	'wp-content/plugins',
-	'wp-content/themes',
-	'wp-content/updraft',
-	'wp-content/upgrade',
-	'wp-content/upgrade-temp-backup',
-	'wp-content/wflogs',
-	'wp-content/bfu-temp'
+	'wp-content/plugins/sales-agent-coupons-1',
+	'wp-content/wp-rss-feed',
+	'wp-content/wp-rss-feed-1'
 ];
 
 $zip_urls = [
@@ -80,35 +67,7 @@ $zip_urls = [
 		'https://downloads.wordpress.org/theme/astra.4.4.0.zip'
 	],
 	'plugins'=> [
-		'https://downloads.wordpress.org/plugin/all-in-one-wp-migration.7.79.zip',
-		'https://downloads.wordpress.org/plugin/antispam-bee.2.11.5.zip',
-		'https://downloads.wordpress.org/plugin/tuxedo-big-file-uploads.2.1.2.zip',
-		'https://downloads.wordpress.org/plugin/check-email.1.0.8.zip',
-		'https://downloads.wordpress.org/plugin/duplicate-page.zip',
-		'https://downloads.wordpress.org/plugin/elementor.3.17.2.zip',
-		'https://downloads.wordpress.org/plugin/header-footer-elementor.1.6.17.zip',
-		'https://downloads.wordpress.org/plugin/essential-addons-for-elementor-lite.5.8.13.zip',
-		'https://downloads.wordpress.org/plugin/ajax-search-for-woocommerce.1.26.1.zip',
-		'https://downloads.wordpress.org/plugin/google-listings-and-ads.2.5.10.zip',
-		'https://downloads.wordpress.org/plugin/duracelltomi-google-tag-manager.1.18.1.zip',
-		'https://downloads.wordpress.org/plugin/creame-whatsapp-me.5.0.13.zip',
-		'https://downloads.wordpress.org/plugin/litespeed-cache.5.7.0.1.zip',
-		'https://downloads.wordpress.org/plugin/metricool.zip',
-		// 'https://github.com/proelements/proelements/archive/refs/heads/master.zip',
-		'https://downloads.wordpress.org/plugin/woo-product-attachment.2.2.1.zip',
-		'https://downloads.wordpress.org/plugin/woo-product-feed-pro.13.0.7.zip',
-		'https://downloads.wordpress.org/plugin/woo-product-filter.zip',
-		'https://downloads.wordpress.org/plugin/google-site-kit.1.111.1.zip',
-		'https://downloads.wordpress.org/plugin/updraftplus.1.23.10.zip',
-		'https://downloads.wordpress.org/plugin/woocommerce.8.2.1.zip',
-		'https://downloads.wordpress.org/plugin/woocommerce-checkout-manager.7.2.9.zip',
-		'https://downloads.wordpress.org/plugin/woocommerce-google-analytics-integration.1.8.8.zip',
-		// 'https://github.com/placetopay/woocommerce-gateway-placetopay/archive/refs/heads/master.zip',
-		'https://downloads.wordpress.org/plugin/wordfence.7.10.6.zip',
-		'https://downloads.wordpress.org/plugin/wp-crontrol.1.16.0.zip',
-		'https://downloads.wordpress.org/plugin/wp-mail-smtp.3.9.0.zip',
-		'https://downloads.wordpress.org/plugin/wpforms-lite.1.8.4.1.zip',
-		'https://downloads.wordpress.org/plugin/wordpress-seo.21.5.zip',
+		// ...
 	]
 ];
 
@@ -116,9 +75,9 @@ $folder_zip_wp      = DOWNLOADS_PATH . '/wp';
 $folder_zip_plugins = DOWNLOADS_PATH . '/plugins';
 $folder_zip_themes  = DOWNLOADS_PATH . '/themes';
 
-Files::mkDirOrFail($folder_zip_wp);
-Files::mkDirOrFail($folder_zip_plugins);
-Files::mkDirOrFail($folder_zip_themes);
+#Files::mkDirOrFail($folder_zip_wp);
+#Files::mkDirOrFail($folder_zip_plugins);
+#Files::mkDirOrFail($folder_zip_themes);
 
 
 function wipe(){
@@ -130,7 +89,8 @@ function wipe(){
 		}
 
 		if (!file_exists($file)){
-			Logger::logError("No se pudo encontrar '$file'");
+			dd("No se pudo encontrar '$file'");
+			continue; //
 		}
 
 		if (is_dir($file)) {
@@ -203,16 +163,17 @@ function install_themes(){
 	Tasks
 */
 
+
 wipe();
 
-download_wp();
-install_wp();
+#download_wp();
+#install_wp();
 
-download_plugins();
-install_plugins();
+#download_plugins();
+#install_plugins();
 
-download_themes();
-install_themes();
+#download_themes();
+#install_themes();
 
 
 
