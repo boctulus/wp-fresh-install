@@ -1,54 +1,56 @@
-﻿# wp-fresh-instal / wp-cleaner
+﻿# wp-fresh-install
 
-"WP fresh install" (o tambien llamado "WP cleaner") es una herramienta para borrar y/o reinstalar de forma segura complementos y temas de un sitio en Wordpress que pudo haber sido infectado y/o estar corrupto y sin tener que subir decenas de miles de archivos via FTP como el propio WP.
+"WP Fresh Install" (also known as "WP Cleaner") is a tool designed to safely delete and/or reinstall plugins and themes on a WordPress site that may have been infected and/or corrupted. This tool does not require uploading tens of thousands of files via FTP like WordPress itself.
 
-Esto NO es un plugin sino una herramienta que debe configurarse y colocarse en el raiz del dominio dentro de /public_html y le permitirá reemplazar todo el contenido de un WordPress infectado sin tocar algunos archivos o carpetas críticos como el wp-config.php o la carpeta de uploads dentro de wp-content. 
+This is NOT a plugin but a tool that should be configured and placed in the root directory of the domain within `/public_html`. It will allow you to replace all the content of an infected WordPress site without touching critical files or folders such as `wp-config.php` or the `uploads` folder within `wp-content`.
 
-Esta herramienta está en estado "Beta" y es experimental. Haga una copia de seguridad previamente !!!
+This tool is in "Beta" state and is experimental. Please make a backup beforehand!
 
-Motivación:
+## Motivation
 
-Si una instalación de WordPress está infectada no hay forma segura de des-infectarlo sin apagar por completo WordPress y subir todos los archivos y en caso que el servidor fuera shared webhosting muy básico es tedioso y lento!!
+If a WordPress installation is infected, there is no safe way to disinfect it without completely shutting down WordPress and uploading all the files. If the server is basic shared web hosting, this process can be tedious and slow!
 
-Este plugin descarga los ZIPs que Ud. quiera directo al servidor e instala de forma directa.
+This tool downloads the ZIPs you need directly to the server and installs them immediately.
 
+## Steps
 
-Pasos:
+1. List all plugins and themes and find the download link for the ZIP file from the WordPress store by following the "Download" button.
 
-1.- Liste todos los plugins y themes y busque el enlace al .zip dentro de la tienda de WordPress que se encuentra al seguir el boton "Descargar".
+   If the plugin or theme is on GitHub, download it, rename the folder from `{plugin}-master` to `{plugin}`, and re-zip it. You will upload these manually later.
 
-Si el plugin o theme estuviera en GitHub, descargelo... renombre la carpeta de "{complemento}-master" a "{complemento}" y vuelva a zipearlo. Estos los subira Ud manualmente al terminar.
+2. Edit the arrays in the `wp-fresh-install.php` file to reflect the plugins and themes you wish to restore from trusted sources.
 
-2.- Edite los arrays que aparecen dentro del archivo wp-cleaner.php para que reflejen lo que Ud. desea restaurar de fuentes confiables.
+3. Create a backup off the server.
 
-3.- Cree una copia de seguridad fuera del servidor.
+4. Disable the WordPress `index.php` to prevent it from calling infected files.
 
-2.- Anule el index.php de WordPress para evitar siga llamando archivos infectados.
+5. Copy the "wp-fresh-install" folder to the root directory, i.e., within `/public_html` or at the same level as the `wp-content`, `wp-admin`, and `wp-includes` folders.
 
-4.- Copie la carpeta "wp-cleaner" a nivel de raíz o sea dentro de /public_html o al mismo nivel de las carpetas wp-content, wp-admin, wp-includes
+6. Create an `invoker.php` file:
 
-5- Cree un archivo "invoker.php"
-
+    ```php
     <?php
 
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    if (is_dir(__DIR__ . '/wp-cleaner')){
-        chdir(__DIR__ . '/wp-cleaner');
+    if (is_dir(__DIR__ . '/wp-fresh-install')){
+        chdir(__DIR__ . '/wp-fresh-install');
     }
 
-    if (is_file('/wp-cleaner/wp-cleaner.php')){
-        require_once __DIR__ . '/wp-cleaner/wp-cleaner.php';
+    if (is_file(__DIR__ . '/wp-fresh-install/wp-fresh-install.php')){
+        require_once __DIR__ . '/wp-fresh-install/wp-fresh-install.php';
     }
 
-    dd('Proceso terminado');
+    dd('Process completed');
+    ```
 
-6.- Ejecute desde el navegador el script en "invoker.php" yendo a https://{dominio}/invoker.php
+7. Execute the script in `invoker.php` from the browser by navigating to `https://{domain}/invoker.php`.
 
-O via SSH o.... enlacelo desde el index.php asi:
+   Alternatively, run it via SSH or include it in `index.php` as follows:
 
+    ```php
     // here
     if (is_file(__DIR__ . '/invoker.php')){
         require_once __DIR__ . '/invoker.php';
@@ -56,3 +58,4 @@ O via SSH o.... enlacelo desde el index.php asi:
 
     /** Loads the WordPress Environment and Template */
     require __DIR__ . '/wp-blog-header.php';
+    ```
