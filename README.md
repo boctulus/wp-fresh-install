@@ -46,6 +46,64 @@ This tool downloads the ZIPs you need directly to the server and installs them i
     dd('Process completed');
     ```
 
+7. Configuration
+
+Arrays to Configure
+
+a. **`$to_wipe`**: This array specifies the relative paths within the `wp-content` directory that should be deleted. Adjust these values to include the specific folders or files you want to remove from the WordPress site before performing the reinstallation.
+
+Example:
+```php
+$to_wipe  = [
+    'wp-content/plugins/sales-agent-coupons-1',
+    'wp-content/wp-rss-feed',
+    'wp-content/wp-rss-feed-1'
+];
+```
+
+Adjust this array according to the folders or files that need to be removed to clean the WordPress installation.
+
+b. $zip_urls: This array contains URLs for ZIP files needed to reinstall WordPress, themes, and plugins. Adjust these URLs to point to the specific versions you want to install.
+
+Example:
+```php
+$zip_urls = [
+    'wp'     => 'https://es.wordpress.org/latest-es_ES.zip',
+    'themes' => [
+        'https://downloads.wordpress.org/theme/astra.4.4.0.zip'
+    ],
+    'plugins'=> [
+        // URLs for plugins here
+    ]
+];
+```
+
+c. Tasks
+
+At the end of the script, there are several tasks that need to be adjusted according to your specific needs. These tasks are commented out in the script and should be uncommented and adjusted based on your workflow:
+
+Example:
+```php
+/*
+    Tasks
+*/
+
+wipe(); // Deletes the files and folders specified in $to_wipe
+
+download_wp(); // Downloads the WordPress ZIP file specified in $zip_urls['wp']
+install_wp();  // Installs WordPress from the downloaded ZIP file
+
+download_plugins(); // Downloads plugins from the URLs specified in $zip_urls['plugins']
+install_plugins();  // Installs plugins from the downloaded ZIP files
+
+download_themes(); // Downloads themes from the URLs specified in $zip_urls['themes']
+install_themes();  // Installs themes from the downloaded ZIP files
+```
+
+'wp': URL for the WordPress ZIP file to download and install.
+'themes': Array of URLs for theme ZIP files to install.
+'plugins': Array of URLs for plugin ZIP files to install. Complete this array with the necessary URLs.
+
 7. Execute the script in `invoker.php` from the browser by navigating to `https://{domain}/invoker.php`.
 
    Alternatively, run it via SSH or include it in `index.php` as follows:

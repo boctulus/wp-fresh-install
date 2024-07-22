@@ -8,17 +8,23 @@ use simplerest\core\libs\Strings;
 use simplerest\core\libs\ZipManager;
 
 /*
-	This is NOT a plugin. Place at same level as WorPress	
+	This is NOT a plugin. Place at same level as WordPress	
 
 	@author Pablo Bozzolo
 
-	Que hace?
+	# Which tasks are performed?
 
-	Limpia practicamente por completo un sitio de WP que este infectado
+	This script can clean an infected WordPress website installation performing:
 
-	Notas
+	- Folder wiping
+	- WordPress core installation
+	- Plugins auto-downloading and instalation
+	- Theme auto-downloading and instalation
 
-	Ajustar manualmente los arrays de plugins y theme a instalar
+	# Instructions
+
+	- Manually adjust the plugin and theme arrays to install.
+	- Go to the end of this script and ajust tasks to be executed.
 */
 
 require_once __DIR__ . '/config/constants.php';
@@ -47,9 +53,6 @@ $root_files = Files::glob(__DIR__ . '/..', '*');
 
 $root_dir = realpath(__DIR__ . '/../'); //
 
-
-// dd($root_dir, 'ROOT DIR');
-// exit;
 
 /*
 	WP + Plugins a instalar
@@ -89,7 +92,7 @@ function wipe(){
 		}
 
 		if (!file_exists($file)){
-			dd("No se pudo encontrar '$file'");
+			dd("File not found: '$file'");
 			continue; //
 		}
 
@@ -162,7 +165,6 @@ function install_themes(){
 /*
 	Tasks
 */
-
 
 wipe();
 
