@@ -28,23 +28,23 @@ This tool downloads the ZIPs you need directly to the server and installs them i
 
 6. Create an `invoker.php` file:
 
-    ```php
-    <?php
+```php
+<?php
 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-    if (is_dir(__DIR__ . '/wp-fresh-install')){
-        chdir(__DIR__ . '/wp-fresh-install');
-    }
+if (is_dir(__DIR__ . '/wp-fresh-install')){
+    chdir(__DIR__ . '/wp-fresh-install');
+}
 
-    if (is_file(__DIR__ . '/wp-fresh-install/wp-fresh-install.php')){
-        require_once __DIR__ . '/wp-fresh-install/wp-fresh-install.php';
-    }
+if (is_file(__DIR__ . '/wp-fresh-install/wp-fresh-install.php')){
+    require_once __DIR__ . '/wp-fresh-install/wp-fresh-install.php';
+}
 
-    dd('Process completed');
-    ```
+dd('Process completed');
+```
 
 7. Configuration
 
@@ -106,14 +106,14 @@ install_themes();  // Installs themes from the downloaded ZIP files
 
 8. Execute the script in `invoker.php` from the browser by navigating to `https://{domain}/invoker.php`.
 
-   Alternatively, run it via SSH or include it in `index.php` as follows:
+Alternatively, run it via SSH or include it in `index.php` as follows:
 
-    ```php
-    // here
-    if (is_file(__DIR__ . '/invoker.php')){
-        require_once __DIR__ . '/invoker.php';
-    }
+```php
+// here
+if (is_file(__DIR__ . '/invoker.php')){
+    require_once __DIR__ . '/invoker.php';
+}
 
-    /** Loads the WordPress Environment and Template */
-    require __DIR__ . '/wp-blog-header.php';
-    ```
+/** Loads the WordPress Environment and Template */
+require __DIR__ . '/wp-blog-header.php';
+```
