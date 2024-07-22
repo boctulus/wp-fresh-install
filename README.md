@@ -104,7 +104,7 @@ install_themes();  // Installs themes from the downloaded ZIP files
 'themes': Array of URLs for theme ZIP files to install.
 'plugins': Array of URLs for plugin ZIP files to install. Complete this array with the necessary URLs.
 
-7. Execute the script in `invoker.php` from the browser by navigating to `https://{domain}/invoker.php`.
+8. Execute the script in `invoker.php` from the browser by navigating to `https://{domain}/invoker.php`.
 
    Alternatively, run it via SSH or include it in `index.php` as follows:
 
